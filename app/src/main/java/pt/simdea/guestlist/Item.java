@@ -1,6 +1,11 @@
 package pt.simdea.guestlist;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
 public class Item {
+    @Id
     private long id;
     private int icon;
     private String item;
@@ -22,7 +27,7 @@ public class Item {
         buyed = false;
     }
 
-    public boolean isGroupHeader() {
+    public boolean getIsGroupHeader() {
         return isGroupHeader;
     }
 
@@ -30,8 +35,8 @@ public class Item {
         return icon;
     }
 
-    public String getCounter() {
-        return ""+counter;
+    public long getCounter() {
+        return counter;
     }
 
     public void addCount() {
@@ -50,16 +55,16 @@ public class Item {
         return item;
     }
 
-    public boolean isBuyed() {
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public boolean getBuyed() {
         return buyed;
     }
 
     public void setBuyed(boolean buyed) {
         this.buyed = buyed;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
     }
 
     // Will be used by the ArrayAdapter in the ListView
