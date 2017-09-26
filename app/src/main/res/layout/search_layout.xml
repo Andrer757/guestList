@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/actionButtonStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center" >
+
+    <AutoCompleteTextView
+        android:id="@+id/textadd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="1"
+        android:focusable="true"
+        android:layout_toLeftOf="@+id/bttadd"
+        android:hint="Add"
+        android:inputType="text"
+        />
+    <Button
+        android:id="@+id/bttadd"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_add_white_24dp"
+        android:text=""/>
+
+</RelativeLayout>
