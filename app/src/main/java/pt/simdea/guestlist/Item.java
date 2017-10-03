@@ -12,7 +12,9 @@ public class Item {
     private int counter;
     private boolean buyed;
 
-    private boolean isGroupHeader = false;
+    public Item() {
+        this(-1, "", 0);
+    }
 
     public Item(String title, int counter) {
         this(-1,title,counter);
@@ -20,15 +22,10 @@ public class Item {
     }
 
     public Item(int icon, String title, int counter) {
-        super();
         this.icon = icon;
         this.item = title;
         this.counter = counter;
         buyed = false;
-    }
-
-    public boolean getIsGroupHeader() {
-        return isGroupHeader;
     }
 
     public int getIcon() {

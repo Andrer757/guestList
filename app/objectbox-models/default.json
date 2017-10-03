@@ -27,10 +27,6 @@
         {
           "id": "5:6947219255457813929",
           "name": "buyed"
-        },
-        {
-          "id": "6:2587064148951262738",
-          "name": "isGroupHeader"
         }
       ],
       "relations": []
@@ -44,7 +40,9 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    2587064148951262738
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

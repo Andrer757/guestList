@@ -2,91 +2,73 @@ package pt.simdea.guestlist;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.query.Query;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
-    private ListView listaCompras;
+    @BindView(R.id.listacompras)
+    protected RecyclerView listaCompras;
     private Box<Item> itemsBox;
     private Query<Item> itemsQuery;
+    private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         BoxStore boxStore = ((App) getApplication()).getBoxStore();
         itemsBox = boxStore.boxFor(Item.class);
 
-        // query all notes, sorted a-z by their text (http://greenrobot.org/objectbox/documentation/queries/)
         itemsQuery = itemsBox.query().order(Item_.id).build();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        listaCompras = findViewById(R.id.listacompras);
         List<Item> values = itemsQuery.find();
-        final ListAdapter adapter = new ListAdapter(this, values);
+        adapter = new ListAdapter(values);
         listaCompras.setAdapter(adapter);
-        SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                        listaCompras,
-                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(int position) {
-                                return true;
-                            }
-
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
-                                    if (listaCompras.getAdapter().getCount() > 0) {
-                                        Item item = adapter.getItem(position);
-                                        itemsBox.remove(item);
-                                        adapter.remove(item);
-                                    }
-                                }
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-        listaCompras.setOnTouchListener(touchListener);
-        listaCompras.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                Item item = adapter.getItem(position);
-                item.addCount();
-                itemsBox.put(item);
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition(); //get position which is swipe
+
+                if (listaCompras.getAdapter().getItemCount() > 0) {
+                    Item item = adapter.getItem(position);
+                    itemsBox.remove(item);
+                    adapter.remove(position);
+                }
                 adapter.notifyDataSetChanged();
             }
         });
-        // Setting this scroll listener is required to ensure that during ListView scrolling,
-        // we don't look for swipes.
-        listaCompras.setOnScrollListener(touchListener.makeScrollListener());
+        itemTouchHelper.attachToRecyclerView(listaCompras); //set swipe to recylcerview
+        listaCompras.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
+    }
+
+    @OnClick(R.id.fab)
+    public void clickFab() {
+        addElement("Tstejhadshjdçhsadçhldsafs");
     }
 
     public void addElement(@NonNull String name) {
-        ListAdapter adapter = (ListAdapter) listaCompras.getAdapter();
         // save the new Item to the database
         if (!name.equals("")) {
             Item item = new Item(name, 0);
@@ -94,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
             adapter.add(item);
         } else
             Toast.makeText(this, "Item vazio", Toast.LENGTH_LONG).show();
-        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Item item = adapter.getItem(position);
+        item.addCount();
+        itemsBox.put(item);
+        adapter.notifyDataSetChanged();
     }
 }

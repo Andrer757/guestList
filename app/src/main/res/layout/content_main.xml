@@ -8,7 +8,7 @@
     tools:context="pt.simdea.guestlist.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listacompras"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
