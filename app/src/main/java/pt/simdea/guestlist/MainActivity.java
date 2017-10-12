@@ -3,6 +3,7 @@ package pt.simdea.guestlist;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -17,6 +18,7 @@ import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.query.Query;
+import pt.simdea.gmlrva.lib.GenericMultipleLayoutAdapter;
 
 public class MainActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
@@ -24,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
     protected RecyclerView listaCompras;
     private Box<Item> itemsBox;
     private Query<Item> itemsQuery;
-    private ListAdapter adapter;
+    private List<Item> values;
+    private GenericMultipleLayoutAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
 
         itemsQuery = itemsBox.query().order(Item_.id).build();
 
-        List<Item> values = itemsQuery.find();
-        adapter = new ListAdapter(values);
+        values = itemsQuery.find();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        listaCompras.setHasFixedSize(true);
+        listaCompras.setItemViewCacheSize(30);
+        listaCompras.setDrawingCacheEnabled(true);
+        listaCompras.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        listaCompras.setNestedScrollingEnabled(false);
+        listaCompras.setLayoutManager(linearLayoutManager);
+        adapter = new GenericMultipleLayoutAdapter(values, this, false);
         listaCompras.setAdapter(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -52,14 +62,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
                 final int position = viewHolder.getAdapterPosition(); //get position which is swipe
 
                 if (listaCompras.getAdapter().getItemCount() > 0) {
-                    Item item = adapter.getItem(position);
+                    Item item = values.get(position);
                     itemsBox.remove(item);
-                    adapter.remove(position);
+                    values.remove(position);
+                    adapter.updateList(values);
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
             }
         });
-        itemTouchHelper.attachToRecyclerView(listaCompras); //set swipe to recylcerview
+        itemTouchHelper.attachToRecyclerView(listaCompras); //set swipe to recycler view
         listaCompras.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
     }
 
@@ -73,14 +84,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
         if (!name.equals("")) {
             Item item = new Item(name, 0);
             itemsBox.put(item);
-            adapter.add(item);
+            values.add(item);
+            adapter.updateList(values);
+            adapter.notifyDataSetChanged();
         } else
             Toast.makeText(this, "Item vazio", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Item item = adapter.getItem(position);
+        Item item = values.get(position);
         item.addCount();
         itemsBox.put(item);
         adapter.notifyDataSetChanged();
