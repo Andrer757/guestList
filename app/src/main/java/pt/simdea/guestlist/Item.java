@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import pt.simdea.gmlrva.lib.IGenericRecyclerViewLayout;
+import pt.simdea.gmlrva.lib.IViewHolder;
 
 @Entity
 public class Item implements IGenericRecyclerViewLayout<Item.RowViewHolder> {
@@ -102,7 +103,7 @@ public class Item implements IGenericRecyclerViewLayout<Item.RowViewHolder> {
         return 0;
     }
 
-    public class RowViewHolder extends RecyclerView.ViewHolder {
+    public class RowViewHolder extends RecyclerView.ViewHolder implements IViewHolder {
 
         @BindView(R.id.textView1)
         protected TextView titleView;
@@ -112,6 +113,11 @@ public class Item implements IGenericRecyclerViewLayout<Item.RowViewHolder> {
         public RowViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void recycle() {
+
         }
     }
 }
