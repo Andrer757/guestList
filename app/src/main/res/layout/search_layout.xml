@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="?attr/actionButtonStyle"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <AutoCompleteTextView
-        android:id="@+id/textadd"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        style="?attr/actionButtonStyle"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:completionThreshold="1"
-        android:focusable="true"
-        android:layout_toLeftOf="@+id/bttadd"
-        android:hint="Add"
-        android:inputType="text"
-        />
-    <Button
-        android:id="@+id/bttadd"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@drawable/ic_add_white_24dp"
-        android:text=""/>
+        android:gravity="center" >
 
-</RelativeLayout>
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/textadd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:completionThreshold="1"
+            android:focusable="true"
+            android:layout_toStartOf="@+id/bttadd"
+            android:hint="@string/add"
+            android:inputType="text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bttadd"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_add_white_24dp"
+            android:text=""/>
+
+    </RelativeLayout>
+
+</layout>
