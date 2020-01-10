@@ -1,0 +1,21 @@
+apply from: "$project.rootDir/tools/settings.gradle"
+
+android {
+
+    flavorDimensions 'build'
+
+    productFlavors {
+
+        app {
+            dimension 'build'
+
+            extension.appName "GuestList"
+            extension.setEndpoints([
+                qa: "-",
+                prod: "-",
+                dev: "-"
+            ])
+        }
+
+    }
+}

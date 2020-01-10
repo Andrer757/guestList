@@ -1,18 +1,31 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
+apply from: "$project.rootDir/tools/git-version.gradle"
+apply from: "$project.rootDir/tools/versions.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.objectbox'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId "pt.simdea.guestlist"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        buildConfigField ("long", "API_TIMEOUT", "30")
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     packagingOptions {
@@ -24,32 +37,51 @@ android {
         exclude 'META-INF/NOTICE'
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        prod {
+            initWith release
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/tools/rules-proguard.pro"
+            manifestPlaceholders += [
+                appIcon: "@mipmap/ic_launcher",
+                appIconRound: "@mipmap/ic_launcher_round"
+            ]
+        }
+
+        qa {
+            initWith debug
+            debuggable true
+            applicationIdSuffix versions.appIdSuffixQa
+            manifestPlaceholders += [
+                appIcon: "@drawable/ic_launcher_qa",
+                appIconRound: "@drawable/ic_launcher_round_qa"
+            ]
+        }
+        
+        dev {
+            initWith debug
+            debuggable true
+            applicationIdSuffix versions.appIdSuffixDev
+            manifestPlaceholders += [
+                appIcon: "@drawable/ic_launcher_dev",
+                appIconRound: "@drawable/ic_launcher_round_dev"
+            ]
         }
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'pt.simdea:gmlrva.lib:1.4.3'
-    compile "androidx.core:core-ktx:1.0.1"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+android.variantFilter { variant ->
+    if(variant.buildType.name.endsWith('release') || variant.buildType.name.endsWith('debug')) {
+variant.setIgnore(true)
+    }
 }
-repositories {
-    mavenCentral()
-}
+
+apply from: "$project.rootDir/tools/flavors.gradle"
+apply from: "$project.rootDir/tools/dependencies.gradle"

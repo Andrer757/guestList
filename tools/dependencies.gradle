@@ -1,0 +1,57 @@
+apply from: "$project.rootDir/tools/libraries.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    /* KOTLIN */
+    implementation libraries.kotlin.base
+
+    /* ANDROID JETPACK */
+    implementation libraries.androidJetpack.gridLayout
+    implementation libraries.androidJetpack.constraintLayout
+    implementation libraries.androidJetpack.lifecycleRuntime
+    implementation libraries.androidJetpack.multidex
+    implementation libraries.androidJetpack.viewModelKotlin
+    implementation libraries.androidJetpack.paging
+    implementation libraries.androidJetpack.recyclerViewSelection
+    implementation libraries.androidJetpack.lifecycle
+    kapt libraries.androidJetpack.lifecycleCompiler
+    implementation libraries.androidJetpack.livedata
+    implementation libraries.androidJetpack.cardView
+    implementation libraries.androidJetpack.design
+    implementation libraries.androidJetpack.recyclerView
+    implementation libraries.androidJetpack.viewModel
+    implementation libraries.androidJetpack.base
+
+    /* DAGGER */
+    implementation libraries.dagger.androidSupport
+    kapt libraries.dagger.compiler
+    kapt libraries.dagger.androidProcessor
+    implementation libraries.dagger.android
+    implementation libraries.dagger.base
+
+    /* ADAL */
+    implementation libraries.adal.utils
+    implementation libraries.adal.accounts
+
+    /* FIREBASE */
+    implementation libraries.firebase.crashlytics
+    implementation libraries.firebase.base
+
+    /* GLIDE */
+    kapt libraries.glide.compiler
+    implementation libraries.glide.base
+
+    /* RETROFIT */
+    implementation libraries.retrofit.logging
+    implementation libraries.retrofit.jackson
+    implementation libraries.retrofit.jacksonConverter
+    implementation libraries.retrofit.base
+
+    /* THREETENABP */
+    implementation libraries.threetenabp.base
+
+    /* PERMISSIONS DISPATCHER */
+    kapt libraries.permissionsDispatcher.android
+    implementation libraries.permissionsDispatcher.base
+}
