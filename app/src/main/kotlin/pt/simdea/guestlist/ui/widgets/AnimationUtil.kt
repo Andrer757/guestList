@@ -1,14 +1,14 @@
-package pt.simdea.guestlist
+package pt.simdea.guestlist.ui.widgets
 
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewPropertyAnimatorListener
-import android.view.View
 
 object AnimationUtil {
 
-    val ANIMATION_DURATION_SHORT = 150
-    val ANIMATION_DURATION_MEDIUM = 400
-    val ANIMATION_DURATION_LONG = 800
+    private const val ANIMATION_DURATION_SHORT = 150
+    const val ANIMATION_DURATION_MEDIUM = 400
+    const val ANIMATION_DURATION_LONG = 800
 
     @JvmOverloads
     fun crossFadeViews(showView: View, hideView: View, duration: Int = ANIMATION_DURATION_SHORT) {

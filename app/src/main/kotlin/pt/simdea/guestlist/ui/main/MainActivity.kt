@@ -1,4 +1,4 @@
-package pt.simdea.guestlist
+package pt.simdea.guestlist.ui.main
 
 import android.view.Menu
 import android.view.View
@@ -9,20 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import io.objectbox.Box
 import io.objectbox.query.Query
 import pt.simdea.gmlrva.lib.GenericMultipleLayoutAdapter
+import pt.simdea.guestlist.Item
+import pt.simdea.guestlist.R
 import pt.simdea.guestlist.databinding.ActivityMainBinding
+import pt.simdea.guestlist.ui.base.BaseActivity
+import pt.simdea.guestlist.ui.widgets.MaterialSearchView
+import pt.simdea.guestlist.ui.widgets.RecyclerItemClickListener
 
-
-
-class MainActivity : ActivityBase<ActivityMainBinding>(), RecyclerItemClickListener.OnItemClickListener {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private var itemsBox: Box<Item>? = null
     private var itemsQuery: Query<Item>? = null
 
-    override fun layoutToInflate(): Int = R.layout.activity_main
+    override fun layoutToInflate() = R.layout.activity_main
+
+    override fun getViewModelClass() = MainViewModel::class.java
 
     override fun doOnCreated() {
         setSupportActionBar(dataBinding.toolbar)
-        val boxStore = (application as App).boxStore
         itemsBox = boxStore!!.boxFor(Item::class.java)
 
         itemsQuery = itemsBox!!.query().order(Item_.id).build()

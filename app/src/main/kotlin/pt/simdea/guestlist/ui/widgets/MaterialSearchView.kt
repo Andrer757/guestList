@@ -1,4 +1,4 @@
-package pt.simdea.guestlist
+package pt.simdea.guestlist.ui.widgets
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -24,6 +24,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import pt.simdea.guestlist.R
 
 class MaterialSearchView : FrameLayout {
 
@@ -437,7 +438,7 @@ class MaterialSearchView : FrameLayout {
         fun onQueryTextChange(newText: String): Boolean
     }
 
-    internal class SavedState : View.BaseSavedState {
+    internal class SavedState : BaseSavedState {
         var query: String? = null
         var isSearchOpen: Boolean = false
 
@@ -454,10 +455,7 @@ class MaterialSearchView : FrameLayout {
             out.writeInt(if (isSearchOpen) 1 else 0)
         }
 
-
-        override fun describeContents(): Int {
-            return 0
-        }
+        override fun describeContents() = 0
 
         companion object CREATOR : Parcelable.Creator<SavedState> {
             override fun createFromParcel(parcel: Parcel): SavedState {
@@ -475,6 +473,3 @@ class MaterialSearchView : FrameLayout {
     }
 
 }
-/**
- * Open Search View. This will animate the showing of the view.
- */
