@@ -10,7 +10,7 @@
         android:icon="${appIcon}"
         android:roundIcon="${appIconRound}"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         android:name=".app.App"
         tools:ignore="GoogleAppIndexingWarning">
 
@@ -27,7 +27,10 @@
             </intent-filter>
 
         </activity>
-        
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait" />
+
     </application>
     
 </manifest>

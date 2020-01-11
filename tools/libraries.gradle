@@ -7,18 +7,18 @@ ext.libraries = [
     androidJetpack : [
         gridLayout : "androidx.gridlayout:gridlayout:$versions.androidJetpackGridlayoutVersion",
         constraintLayout : "androidx.constraintlayout:constraintlayout:$versions.androidJetpackConstraintlayoutVersion",
-        lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime:$versions.androidJetpackLifecycleruntimeVersion",
+        lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime:$versions.androidJetpackLifecycleVersion",
         multidex : "androidx.multidex:multidex:$versions.androidJetpackMultidexVersion",
-        viewModelKotlin : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidJetpackViewmodelkotlinVersion",
+        viewModelKotlin : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidJetpackLifecycleVersion",
         paging : "androidx.paging:paging-runtime:$versions.androidJetpackPagingVersion",
         recyclerViewSelection : "androidx.recyclerview:recyclerview-selection:$versions.androidJetpackRecyclerviewselectionVersion",
         lifecycle : "androidx.lifecycle:lifecycle-extensions:$versions.androidJetpackLifecycleVersion",
-        lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:$versions.androidJetpackLifecyclecompilerVersion",
-        livedata : "androidx.lifecycle:lifecycle-livedata:$versions.androidJetpackLivedataVersion",
+        lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:$versions.androidJetpackLifecycleVersion",
+        livedata : "androidx.lifecycle:lifecycle-livedata:$versions.androidJetpackLifecycleVersion",
         cardView : "androidx.cardview:cardview:$versions.androidJetpackCardviewVersion",
         design : "com.google.android.material:material:$versions.androidJetpackDesignVersion",
         recyclerView : "androidx.recyclerview:recyclerview:$versions.androidJetpackRecyclerviewVersion",
-        viewModel : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidJetpackViewmodelVersion",
+        viewModel : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidJetpackLifecycleVersion",
         base : "androidx.appcompat:appcompat:$versions.androidJetpackVersion"
     ],
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -16,12 +17,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pt.simdea.guestlist.ui.animation.AnimationType
-import pt.simdea.guestlist.ui.animation.TransactionAnimation
-import pt.simdea.guestlist.ui.widgets.afm.OnBackPressedListener
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import pt.simdea.guestlist.ui.animation.AnimationType
+import pt.simdea.guestlist.ui.animation.TransactionAnimation
+import pt.simdea.guestlist.ui.widgets.afm.OnBackPressedListener
 import javax.inject.Inject
 
 abstract class BaseActivity<T : ViewDataBinding, VM : ViewModel> : AppCompatActivity(), HasAndroidInjector, TransactionAnimation {
@@ -45,9 +46,6 @@ abstract class BaseActivity<T : ViewDataBinding, VM : ViewModel> : AppCompatActi
 
     //to draw behind potential transparent status bar
     open var shouldFullScreenStretch = false
-
-    private var loadingDialog: LoadingDialog? = null
-    private var errorDialog: ErrorDialog? = null
 
     protected val dataBinding: T by lazy {
         DataBindingUtil.setContentView<T>(this, layoutToInflate())
@@ -98,7 +96,6 @@ abstract class BaseActivity<T : ViewDataBinding, VM : ViewModel> : AppCompatActi
          }
 
          doOnCreated()
-         setSystemBarTransparent()
      }
 
      protected open fun getDefaultFragment(): Class<out Fragment>? {

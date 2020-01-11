@@ -21,12 +21,11 @@ class AccountUtils @Inject constructor(private val application: Application, pri
     }
 
     fun storeAccount(username: String, password: String, authenticationModel: TokenModel) {
-        AccountHelper.addAccount(application, username, password, authenticationModel.accessToken)
+        AccountHelper.addAccount(application, username, password, "")
         updateAccount(authenticationModel)
     }
 
     fun updateAccount(authenticationModel: TokenModel) {
-        setRefreshToken(authenticationModel.refreshToken)
     }
 
     fun getCurrentAccount() = try {

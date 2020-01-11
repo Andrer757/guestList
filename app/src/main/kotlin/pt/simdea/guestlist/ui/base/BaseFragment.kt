@@ -7,13 +7,14 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pt.simdea.guestlist.ui.animation.AnimationType
-import pt.simdea.guestlist.ui.animation.Animations
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import pt.simdea.guestlist.ui.animation.AnimationType
+import pt.simdea.guestlist.ui.animation.Animations
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, VM : ViewModel> : Fragment(), HasAndroidInjector {
@@ -27,7 +28,7 @@ abstract class BaseFragment<T : ViewDataBinding, VM : ViewModel> : Fragment(), H
     open var useLazyLoading = false
 
     protected val dataBinding: T by lazy {
-        DataBindingUtil.setContentView<T>(this, layoutToInflate())
+        DataBindingUtil.inflate<T>(LayoutInflater.from(context), layoutToInflate(), null, false)
     }
 
     protected val viewModel: VM by lazy {

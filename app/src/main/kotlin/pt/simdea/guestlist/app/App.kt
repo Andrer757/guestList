@@ -3,9 +3,9 @@ package pt.simdea.guestlist.app
 import android.app.Application
 import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
-import pt.simdea.guestlist.di.component.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import pt.simdea.guestlist.di.component.DaggerAppComponent
 import javax.inject.Inject
 
 /**
@@ -18,10 +18,6 @@ open class App @Inject constructor() : Application(), HasAndroidInjector {
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector() = androidInjector
-
-    override fun onCreate() {
-        super.onCreate()
-    }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

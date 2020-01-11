@@ -54,4 +54,5 @@ dependencies {
     /* PERMISSIONS DISPATCHER */
     kapt libraries.permissionsDispatcher.android
     implementation libraries.permissionsDispatcher.base
+
 }

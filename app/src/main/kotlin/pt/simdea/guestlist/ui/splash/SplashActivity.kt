@@ -19,7 +19,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     @Inject
     lateinit var callManager: CallManager
-
     @Inject
     lateinit var preferencesManager: PreferencesManager
 
@@ -55,8 +54,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         if (handler == null) return
 
         handler!!.postDelayed({
-            //startActivity(callManager.home(this))
-            //finishAffinity()
+            startActivity(callManager.main(this))
+            finishAffinity()
         }, timeout)
     }
 

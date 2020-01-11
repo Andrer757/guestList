@@ -20,8 +20,8 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    buildFeatures {
-        dataBinding = true
+    dataBinding {
+        enabled = true
     }
 
     kotlinOptions {

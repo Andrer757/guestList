@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import pt.simdea.guestlist.di.annotations.ViewModelKey
 import pt.simdea.guestlist.di.factory.ViewModelFactory
+import pt.simdea.guestlist.ui.main.MainViewModel
 import pt.simdea.guestlist.ui.splash.SplashViewModel
 
 @Module(includes = [RepositoryModule::class])
@@ -19,5 +20,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
     abstract fun bindsSplashViewModel(splashViewModel: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindsMainViewModel(mainViewModel: MainViewModel): ViewModel
 
 }
